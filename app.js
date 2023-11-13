@@ -1,29 +1,61 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-//Sequelize
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+
+// Sequelize
 const { Sequelize } = require('sequelize');
-// Option 3: Passing parameters separately (other dialects)
-//new Sequelize('database', 'username', 'password',
-const sequelize = new Sequelize('app_tarefas', 'root', 'root', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+const sequelize = require('./db');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// Models
+const Tarefa = require('./models/tarefa');
 
-var app = express();
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
 
-// view engine setup
+    // Sincroniza o modelo com o banco de dados
+    await Tarefa.sync();
+    
+    // Cria uma tarefa
+    const resultadoCreate = await Tarefa.create({
+      titulo: 'estudar',
+      descricao: 'estudar IOT',
+      status: 'pendente',
+      data_criacao: '2023-11-13 10:00',
+      data_limite: '2023-11-20 10:00'
+    });
+    console.log(resultadoCreate);
+    //Read / leitura dos dados
+    // ler todas tarefas
+    const listar_tarefas = await Tarefa.findAll();
+    console.log(listar_tarefas);
+    // ler uma tarefa por id
+    const tarefa_id = await Tarefa.findByPk(1);
+    console.log(tarefa_id);
+
+    //Update
+    const tarefa_update = await Tarefa.findByPk(1);
+    //console.log(produto);
+    tarefa_update.titulo = "Viajar";
+    const resultadoSave = await tarefa_update.save();
+    console.log(resultadoSave)
+
+    //Delete
+    const tarefa_delete = await Tarefa.findByPk(1);
+    tarefa_delete.destroy();
+
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+    })();
+
+// Restante do código para setup do Express
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const app = express();
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -36,18 +68,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
