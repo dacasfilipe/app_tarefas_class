@@ -1,7 +1,12 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const sequelize = require("./config/sequelize");
+const cors = require("cors");
+const Associations = require("./models/tarefa_usuario");
+const app = express();
+const port = 3000;
+const moment = require('moment-timezone');
 
 // Sequelize
 const { Sequelize } = require('sequelize');
@@ -54,7 +59,6 @@ const Tarefa = require('./models/tarefa');
 // Restante do código para setup do Express
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

@@ -1,9 +1,8 @@
 //Sequelize
-const { Sequelize } = require('sequelize');
-// Option 3: Passing parameters separately (other dialects)
-//new Sequelize('database', 'username', 'password',
-const sequelize = new Sequelize('app_tarefas', 'root', 'root', {
-  host: 'localhost',
+require('dotenv').config();
+const { Sequelize } = require('sequelize'),
+sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
   dialect: 'mysql'
 });
 
