@@ -16,35 +16,35 @@ const Tarefa = require('./models/tarefa');
     console.log('Connection has been established successfully.');
 
     // Sincroniza o modelo com o banco de dados
-    await Tarefa.sync();
+    // await Tarefa.sync();
     
-    // Cria uma tarefa
-    const resultadoCreate = await Tarefa.create({
-      titulo: 'estudar',
-      descricao: 'estudar IOT',
-      status: 'pendente',
-      data_criacao: '2023-11-13 10:00',
-      data_limite: '2023-11-20 10:00'
-    });
-    console.log(resultadoCreate);
+    // // Cria uma tarefa
+    // const resultadoCreate = await Tarefa.create({
+    //   titulo: 'estudar',
+    //   descricao: 'estudar IOT',
+    //   status: 'pendente',
+    //   data_criacao: '2023-11-13 10:00',
+    //   data_limite: '2023-11-20 10:00'
+    // });
+    // console.log(resultadoCreate);
     //Read / leitura dos dados
     // ler todas tarefas
-    const listar_tarefas = await Tarefa.findAll();
-    console.log(listar_tarefas);
+    // const listar_tarefas = await Tarefa.findAll();
+    // console.log(listar_tarefas);
     // ler uma tarefa por id
-    const tarefa_id = await Tarefa.findByPk(1);
-    console.log(tarefa_id);
+    // const tarefa_id = await Tarefa.findByPk(1);
+    // console.log(tarefa_id);
 
     //Update
-    const tarefa_update = await Tarefa.findByPk(1);
-    //console.log(produto);
-    tarefa_update.titulo = "Viajar";
-    const resultadoSave = await tarefa_update.save();
-    console.log(resultadoSave)
+    // const tarefa_update = await Tarefa.findByPk(1);
+    // //console.log(produto);
+    // tarefa_update.titulo = "Viajar";
+    // const resultadoSave = await tarefa_update.save();
+    // console.log(resultadoSave)
 
     //Delete
-    const tarefa_delete = await Tarefa.findByPk(1);
-    tarefa_delete.destroy();
+    // const tarefa_delete = await Tarefa.findByPk(1);
+    // tarefa_delete.destroy();
 
     } catch (error) {
       console.error('Unable to connect to the database:', error);
