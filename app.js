@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const sequelize = require("./config/sequelize");
 const cors = require("cors");
 const Associations = require("./models/tarefa_usuario");
 const app = express();
@@ -57,19 +56,18 @@ const Tarefa = require('./models/tarefa');
     })();
 
 // Restante do código para setup do Express
-const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use(function(req, res, next) {
