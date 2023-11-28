@@ -59,6 +59,7 @@ const Tarefa = require('./models/tarefa');
 
 // Restante do código para setup do Express
 const usersRouter = require('./routes/users');
+const tasksRouter = require('./routes/tasks');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -71,6 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
