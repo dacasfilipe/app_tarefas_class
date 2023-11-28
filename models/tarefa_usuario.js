@@ -3,14 +3,14 @@ const sequelize = require("../db"),
   Usuario = require("./usuario");
 
 Tarefa.belongsToMany(Usuario, {
-  through: "UsuarioTarefa",
+  through: "usuarios_has_tarefas",
   foreignKey: "usuarios_id",
   otherKey: "tarefas_id",
   unique: true,
 });
 
 Usuario.belongsToMany(Tarefa, {
-  through: "UsuarioTarefa",
+  through: "usuarios_has_tarefas",
   foreignKey: "tarefas_id",
   otherKey: "usuarios_id",
   unique: true,

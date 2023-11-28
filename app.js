@@ -3,14 +3,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const Associations = require("./models/tarefa_usuario");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 const moment = require('moment-timezone');
+app.use(bodyParser.json());
 
 // Sequelize
 const { Sequelize } = require('sequelize');
 const sequelize = require('./db');
-
+sequelize.sync();
 // Models
 const Tarefa = require('./models/tarefa');
 
